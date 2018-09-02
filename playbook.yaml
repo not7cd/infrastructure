@@ -1,0 +1,11 @@
+# should install docker run-time
+# get all required services
+# start docker conainers and nginx
+# reverse proxy from given subdomains
+# install certs for every subdomain
+
+- hosts: squire
+  roles:
+    - docker
+    - nginx
+    - certbot
