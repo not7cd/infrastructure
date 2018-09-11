@@ -6,3 +6,5 @@
         - "{{ ansible_env.USER }}"
       docker_package_state: latest
       become: yes
+
+    - sshd_banner
