@@ -1,0 +1,8 @@
+---
+- hosts: all
+  roles:
+    - role: geerlingguy.docker
+      docker_users:
+        - "{{ ansible_env.USER }}"
+      docker_package_state: latest
+      become: yes
