@@ -1,0 +1,15 @@
+---
+- name: create "volumes" directory
+  file: path=/opt/volumes state=directory
+
+- name: copy aplications' compose files
+  copy:
+    dest: /opt
+    src: "{{ item }}"
+  with_items: "{{ apps }}"
+
+- name: run applications
+  docker_service:
+    project_src: /opt/{{ item }}
+    pull: true
+  with_items: "{{ apps }}"

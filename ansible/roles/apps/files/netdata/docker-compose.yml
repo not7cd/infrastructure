@@ -1,0 +1,14 @@
+version: '2'
+services:
+    netdata:
+        image: titpetric/netdata:latest
+        restart: always
+        cap_add:
+            - SYS_PTRACE
+        volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /etc/localtime:/etc/localtime:ro
+        ports:
+            - "127.0.0.1:6800:19999"
+

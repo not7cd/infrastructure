@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  vars:
+    apps: ["netdata"]
   become: yes
   roles:
     - role: geerlingguy.docker
@@ -8,3 +10,5 @@
       docker_package_state: latest
 
     - sshd_banner
+
+    - apps
