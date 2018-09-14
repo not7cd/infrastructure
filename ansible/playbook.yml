@@ -4,11 +4,10 @@
     apps: ["netdata"]
   become: yes
   roles:
+    - laptop_server
     - role: geerlingguy.docker
       docker_users:
         - "{{ ansible_env.USER }}"
       docker_package_state: latest
-
     - sshd_banner
-
     - apps

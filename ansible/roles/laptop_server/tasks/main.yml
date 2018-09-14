@@ -1,0 +1,11 @@
+---
+
+- name: disable shutdown/hibernate on closing lid
+  lineinfile:
+    path: /etc/systemd/logind.conf
+    line: "HandleLidSwitch=ignore"
+    regexp: '(#\s*)?HandleLidSwitch.*'
+    firstmatch: yes
+    insertafter: regex
+  notify:
+    - restart systemd-logind
