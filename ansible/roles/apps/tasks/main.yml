@@ -2,6 +2,11 @@
 - name: create "volumes" directory
   file: path=/opt/volumes state=directory
 
+- name: create "src" directory
+  file: path=/opt/src state=directory
+
+# ensure "src" and "volumes" are not in {{ apps }} as this would break our setup
+
 - name: copy aplications' compose files
   copy:
     dest: /opt
