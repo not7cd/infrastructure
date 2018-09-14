@@ -7,7 +7,6 @@
     regexp: '(#\s*)?Banner.*'
     firstmatch: yes
     insertafter: regex
-  become: yes
   notify:
     - reload sshd
 
@@ -18,4 +17,3 @@
   copy:
     dest: /etc/sshd-banner
     src: banner
-  become: true
