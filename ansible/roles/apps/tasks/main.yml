@@ -5,6 +5,12 @@
 - name: create "src" directory
   file: path=/opt/src state=directory
 
+- assert:
+    that:
+      - "'volumes' not in apps"
+      - "'src' not in apps"
+    msg: "'volumes' and 'src' are reserved names"
+
 # ensure "src" and "volumes" are not in {{ apps }} as this would break our setup
 
 - name: copy aplications' compose files
