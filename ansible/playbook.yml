@@ -4,10 +4,16 @@
     apps: ["netdata"]
   become: yes
   roles:
+    # landscape
     - laptop_server
     - role: geerlingguy.docker
       docker_users:
-        - "{{ ansible_env.USER }}"
+        - hsop
       docker_package_state: latest
+
+    # customization
+    - admin_utilities
     - sshd_banner
+
+    # apps
     - apps
