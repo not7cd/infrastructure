@@ -1,0 +1,7 @@
+- name: install some tools that simplify administration
+  package: name={{ item }} state=present
+  with_items:
+    - vim
+    - htop
+    - byobu # not7cd - what is this for?
+    - tmux
