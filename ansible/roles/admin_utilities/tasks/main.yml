@@ -3,5 +3,4 @@
   with_items:
     - vim
     - htop
-    - byobu # not7cd - what is this for?
     - tmux
