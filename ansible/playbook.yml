@@ -1,9 +1,13 @@
 ---
 - hosts: all
   vars:
-    apps: ["netdata"]
+    apps:
+      - netdata
+      - at
+      - whois
   become: yes
   roles:
+
     # landscape
     - laptop_server
     - role: geerlingguy.docker
