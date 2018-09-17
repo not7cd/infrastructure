@@ -1,17 +1,14 @@
 ---
 - name: create "volumes" directory
-  file: path=/opt/volumes state=directory
+  file: path=/var/opt/volumes state=directory
 
 - name: create "src" directory
   file: path=/opt/src state=directory
 
 - assert:
     that:
-      - "'volumes' not in apps"
       - "'src' not in apps"
-    msg: "'volumes' and 'src' are reserved names"
-
-# ensure "src" and "volumes" are not in {{ apps }} as this would break our setup
+    msg: "'src' is reserved name"
 
 - name: copy aplications' compose files
   copy:
