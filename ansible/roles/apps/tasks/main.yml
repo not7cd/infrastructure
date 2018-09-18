@@ -1,10 +1,22 @@
 ---
+- name: install git - in order to clone Dotfiles repository
+  package: name=git state=latest
+  become: yes
+
 - name: create required directories
   file: path={{ item }} state=directory
   with_items:
     - "{{ apps_compose_path }}"
     - "{{ apps_src_path }}"
     - "{{ apps_volumes_path }}"
+
+- name: copy aplications' sources for local build
+  git:
+    repo: "{{ item.git_url }}"
+    dest: "{{ apps_src_path }}{{ item.name }}"
+    version: master
+  when: item.git_url
+  with_items: "{{ apps }}"
 
 - name: copy aplications' compose files
   copy:
@@ -14,6 +26,6 @@
 
 - name: run applications
   docker_service:
-    project_src: "{{ apps_compose_path }}/{{ item }}"
+    project_src: "{{ apps_compose_path }}{{ item }}"
     pull: true
   with_items: "{{ apps | map(attribute='name') | list }}"
