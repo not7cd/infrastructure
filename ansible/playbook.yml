@@ -17,3 +17,5 @@
 
     # apps
     - apps
+
+    - {role: backup, tags: backup}
