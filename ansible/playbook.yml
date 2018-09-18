@@ -2,9 +2,12 @@
 - hosts: all
   vars:
     apps:
-      - netdata
-      - at
-      - whois
+      - name: netdata
+        git_url: ~
+      - name: at
+        git_url: https://github.com/hs3city/at.git
+      - name: whois
+        git_url: https://github.com/hs3city/whois.git
   become: yes
   roles:
 

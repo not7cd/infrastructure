@@ -10,10 +10,10 @@
   copy:
     dest: "{{ apps_compose_path }}"
     src: "{{ item }}"
-  with_items: "{{ apps }}"
+  with_items: "{{ apps | map(attribute='name') | list }}"
 
 - name: run applications
   docker_service:
     project_src: "{{ apps_compose_path }}/{{ item }}"
     pull: true
-  with_items: "{{ apps }}"
+  with_items: "{{ apps | map(attribute='name') | list }}"
