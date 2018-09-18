@@ -15,6 +15,7 @@
     repo: "{{ item.git_url }}"
     dest: "{{ apps_src_path }}{{ item.name }}"
     version: master
+    force: yes
   when: item.git_url
   with_items: "{{ apps }}"
 
