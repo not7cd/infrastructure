@@ -1,26 +1,33 @@
 ---
-- name: create "volumes" directory
-  file: path=/opt/volumes state=directory
+- name: install git - in order to clone Dotfiles repository
+  package: name=git state=latest
+  become: yes
 
-- name: create "src" directory
-  file: path=/opt/src state=directory
+- name: create required directories
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ apps_compose_path }}"
+    - "{{ apps_src_path }}"
+    - "{{ apps_volumes_path }}"
 
-- assert:
-    that:
-      - "'volumes' not in apps"
-      - "'src' not in apps"
-    msg: "'volumes' and 'src' are reserved names"
-
-# ensure "src" and "volumes" are not in {{ apps }} as this would break our setup
+- name: copy aplications' sources for local build
+  git:
+    repo: "{{ item.git_url }}"
+    dest: "{{ apps_src_path }}{{ item.name }}"
+    version: master
+  when: item.git_url
+  with_items: "{{ apps }}"
 
 - name: copy aplications' compose files
-  copy:
-    dest: /opt
-    src: "{{ item }}"
-  with_items: "{{ apps }}"
+  template:
+    dest: "{{ apps_compose_path }}{{ item }}/docker-compose.yml"
+    src: "{{ item }}/docker-compose.j2"
+    validate: docker-compose -f %s config
+  with_items: "{{ apps | map(attribute='name') | list }}"
 
 - name: run applications
   docker_service:
-    project_src: /opt/{{ item }}
+    project_src: "{{ apps_compose_path }}{{ item }}"
     pull: true
-  with_items: "{{ apps }}"
+    build: true
+  with_items: "{{ apps | map(attribute='name') | list }}"

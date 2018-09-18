@@ -1,7 +1,7 @@
 version: '2'
 services:
     whois-web:
-        build: /home/not7cd/whois
+        build: "{{ apps_src_path }}whois"
         restart: always
         ports:
             - "127.0.0.1:6000:8000"

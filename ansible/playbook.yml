@@ -1,9 +1,16 @@
 ---
 - hosts: all
   vars:
-    apps: ["netdata"]
+    apps:
+      - name: netdata
+        git_url: ~
+      - name: at
+        git_url: https://github.com/hs3city/at.git
+      - name: whois
+        git_url: https://github.com/hs3city/whois.git
   become: yes
   roles:
+
     # landscape
     - laptop_server
     - role: geerlingguy.docker
