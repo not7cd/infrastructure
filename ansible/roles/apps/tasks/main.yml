@@ -1,23 +1,19 @@
 ---
-- name: create "volumes" directory
-  file: path=/var/opt/volumes state=directory
-
-- name: create "src" directory
-  file: path=/opt/src state=directory
-
-- assert:
-    that:
-      - "'src' not in apps"
-    msg: "'src' is reserved name"
+- name: create required directories
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ apps_compose_path }}"
+    - "{{ apps_src_path }}"
+    - "{{ apps_volumes_path }}"
 
 - name: copy aplications' compose files
   copy:
-    dest: /opt
+    dest: "{{ apps_compose_path }}"
     src: "{{ item }}"
   with_items: "{{ apps }}"
 
 - name: run applications
   docker_service:
-    project_src: /opt/{{ item }}
+    project_src: "{{ apps_compose_path }}/{{ item }}"
     pull: true
   with_items: "{{ apps }}"
