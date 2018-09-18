@@ -28,4 +28,5 @@
   docker_service:
     project_src: "{{ apps_compose_path }}{{ item }}"
     pull: true
+    build: true
   with_items: "{{ apps | map(attribute='name') | list }}"
