@@ -19,9 +19,10 @@
   with_items: "{{ apps }}"
 
 - name: copy aplications' compose files
-  copy:
-    dest: "{{ apps_compose_path }}"
-    src: "{{ item }}"
+  template:
+    dest: "{{ apps_compose_path }}{{ item }}/docker-compose.yml"
+    src: "{{ item }}/docker-compose.j2"
+    validate: docker-compose -f %s config
   with_items: "{{ apps | map(attribute='name') | list }}"
 
 - name: run applications
