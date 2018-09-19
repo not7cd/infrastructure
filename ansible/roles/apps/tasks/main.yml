@@ -4,20 +4,20 @@
   become: yes
 
 - name: create required directories
-  become: yes
   file: path={{ item }} state=directory
   with_items:
     - "{{ apps_compose_path }}"
     - "{{ apps_src_path }}"
+  become: yes
 
 - name: create required volume directories
-  become: yes
   file: 
     path: "{{ apps_volumes_path }}" 
     state: directory
     recurse: yes
     owner: nobody
     mode: 0755
+  become: yes
 
 - name: copy aplication sources for local build
   git:
@@ -27,6 +27,7 @@
     force: yes
   when: item.git_url
   with_items: "{{ apps }}"
+  become: yes
 
 - name: copy aplication compose files
   template:
@@ -34,6 +35,7 @@
     src: "{{ item }}/docker-compose.j2"
     validate: docker-compose -f %s config
   with_items: "{{ apps | map(attribute='name') | list }}"
+  become: yes
 
 - name: run applications
   docker_service:

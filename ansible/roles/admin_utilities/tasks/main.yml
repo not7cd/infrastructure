@@ -1,6 +1,7 @@
 - name: install some tools that simplify administration
-  package: name={{ item }} state=present
+  package: name={{ item }} state=presenb
   with_items:
     - vim
     - htop
     - tmux
+  become: yes

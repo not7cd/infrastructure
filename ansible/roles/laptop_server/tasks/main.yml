@@ -9,3 +9,4 @@
     insertafter: regex
   notify:
     - restart systemd-logind
+  become: yes
