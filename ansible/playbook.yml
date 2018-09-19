@@ -10,18 +10,26 @@
       - name: whois
         git_url: https://github.com/hs3city/whois.git
   roles:
-
-    # landscape
-    - laptop_server
+    - role: laptop_server
+      tags:
+        - landscape
     - role: geerlingguy.docker
       docker_users:
         - hsop
       docker_package_state: latest
+      tags:
+        - landscape
 
-    # customization
-    - admin_utilities
-    - sshd_banner
+    - role: admin_utilities
+      tags: customization
+        - landscape
+    - role: sshd_banner
+      tags: customization
 
-    # apps
-    - apps
-    - backup
+    - role: apps
+      tags:
+        - apps
+
+    - role: backup
+      tags:
+        - maintenance
